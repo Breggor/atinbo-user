@@ -2,7 +2,7 @@ package com.atinbo.user.service;
 
 import com.atinbo.user.model.UserReq;
 import com.atinbo.user.model.UserRes;
-import com.atinbo.user.service.fallback.UserServiceFallback;
+import com.atinbo.user.fallback.UserServiceFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,8 +1,9 @@
 package com.atinbo.user.service;
 
-import com.atinbo.user.model.UserReq;
-import com.atinbo.user.model.UserRes;
+import com.atinbo.core.service.model.Outcome;
 import com.atinbo.user.fallback.UserServiceFallback;
+import com.atinbo.user.model.UserBO;
+import com.atinbo.user.model.UserParam;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,9 +19,9 @@ public interface UserService {
     /**
      * 会员注册
      *
-     * @param req
+     * @param param
      * @return
      */
     @PostMapping("/register")
-    UserRes register(@RequestBody UserReq req);
+    Outcome<UserBO> register(@RequestBody UserParam param);
 }

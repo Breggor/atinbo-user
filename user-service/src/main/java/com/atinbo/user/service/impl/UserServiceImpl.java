@@ -1,7 +1,8 @@
 package com.atinbo.user.service.impl;
 
-import com.atinbo.user.model.UserReq;
-import com.atinbo.user.model.UserRes;
+import com.atinbo.core.service.model.Outcome;
+import com.atinbo.user.model.UserBO;
+import com.atinbo.user.model.UserParam;
 import com.atinbo.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserServiceImpl implements UserService {
 
     @Override
-    public UserRes register(@RequestBody UserReq req) {
-        log.info(req.toString());
-        return new UserRes().setNickname("breggor").setAge(35);
+    public Outcome<UserBO> register(@RequestBody UserParam req) {
+        log.info("register 入参===={}", req.toString());
+        return Outcome.ofSuccess(new UserBO().setAge(30).setNickname("breggor"));
     }
 }

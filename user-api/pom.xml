@@ -25,12 +25,32 @@
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
-        
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-openfeign-core</artifactId>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
+
+        <dependency>
+            <groupId>com.atinbo</groupId>
+            <artifactId>atinbo-core</artifactId>
+        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Javadoc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+            <!--JavaSource-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

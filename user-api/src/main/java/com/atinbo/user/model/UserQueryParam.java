@@ -1,14 +1,13 @@
 package com.atinbo.user.model;
 
 
+import com.atinbo.core.service.model.PageParam;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
-
 @Data
 @Accessors(chain = true)
-public class UserParam implements Serializable {
+public class UserQueryParam extends PageParam {
 
     private String nickname;
 }

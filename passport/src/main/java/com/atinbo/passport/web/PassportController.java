@@ -11,6 +11,7 @@ import com.atinbo.passport.web.model.UserRegisterForm;
 import com.atinbo.passport.web.model.UserVO;
 import com.atinbo.user.model.UserBO;
 import com.atinbo.user.service.UserService;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -20,14 +21,17 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author breggor
  */
+@Api(tags = "用户注册、查询")
 @RestController
 @RequestMapping("/passport")
 public class PassportController {
     @Autowired
     UserService userService;
 
+    @ApiOperation(value = "用户注册")
+    @ApiResponses(@ApiResponse(code = 500001,message = "系统错误"))
     @PostMapping("/register")
-    public UserVO register(@RequestBody @Validated UserRegisterForm form) throws HttpAPIException {
+    public UserVO register(@RequestBody @Validated @ApiParam("用户基本信息") UserRegisterForm form) throws HttpAPIException {
 
         Outcome<UserBO> outcome = userService.register(UserMapper.INSTANCE.toUserParam(form));
         if (outcome.isSuccess()) {
@@ -37,9 +41,10 @@ public class PassportController {
         }
     }
 
-
+    @ApiOperation(value = "用户信息查询")
+    @ApiResponses(@ApiResponse(code = 500001,message = "系统错误"))
     @GetMapping("/users")
-    public PageResult<UserVO> users(@Validated UserQueryForm form) throws HttpAPIException {
+    public PageResult<UserVO> users(@Validated @ApiParam("查询条件") UserQueryForm form) throws HttpAPIException {
 
         PageOutcome<UserBO> outcome = userService.findUsers(UserMapper.INSTANCE.toUserQueryParam(form));
         if (outcome.isSuccess()) {

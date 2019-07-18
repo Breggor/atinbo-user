@@ -2,12 +2,19 @@ package com.atinbo.passport.web.model;
 
 
 import com.atinbo.core.http.model.BaseVO;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
+@ApiModel(description = "用户基本资料")
 public class UserVO implements BaseVO {
+
+    @ApiModelProperty(value = "用户id", required = true, example = "1")
     private Long userId;
+
+    @ApiModelProperty(value = "用户昵称", example = "孙大圣")
     private String nickname;
 }

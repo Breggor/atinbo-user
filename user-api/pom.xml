@@ -41,6 +41,12 @@
             <groupId>com.atinbo</groupId>
             <artifactId>atinbo-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.9.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

@@ -7,6 +7,7 @@ import com.atinbo.user.model.UserBO;
 import com.atinbo.user.model.UserParam;
 import com.atinbo.user.model.UserQueryParam;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -30,19 +31,22 @@ public interface UseFeignService {
 
     /**
      * 会员列表
-     *
+     *GetMapping不支持@RequestBody
      * @param param
      * @return
      */
-    @PostMapping
+    @PostMapping("/findUsers")
     PageOutcome<UserBO> findUsers(@RequestBody UserQueryParam param);
 
-    @PostMapping
-    PageOutcome<UserBO> findUsersById(UserQueryParam param);
+    @PostMapping("/findUsersByCondition")
+    PageOutcome<UserBO> findUsersByCondition(@RequestBody UserQueryParam param);
 
-    @PostMapping
-    Outcome<UserBO> editUsersById(UserParam param);
+    @PostMapping("/findUsersById")
+    PageOutcome<UserBO> findUsersById(@RequestBody UserQueryParam param);
 
-    @PostMapping
-    boolean deleteUsers(Long id);
+     @PostMapping("editUsersById")
+    Outcome<UserBO> editUsersById(@RequestBody UserParam param);
+
+    @PostMapping("deleteUsers")
+    boolean deleteUsers(@RequestBody UserParam param);
 }

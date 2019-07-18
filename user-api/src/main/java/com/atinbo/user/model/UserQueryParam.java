@@ -10,4 +10,5 @@ import lombok.experimental.Accessors;
 public class UserQueryParam extends PageParam {
     private Long id;
     private String nickname;
+    private Integer age;
 }

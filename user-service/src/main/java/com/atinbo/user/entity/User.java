@@ -1,6 +1,7 @@
 package com.atinbo.user.entity;
 
 import com.atinbo.user.base.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.DynamicInsert;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 
 @Data
 @Entity
+@JsonIgnoreProperties
 @Table(name = "user")
 @Where(clause = "deleted = 0")
 @EqualsAndHashCode
@@ -23,5 +25,5 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nickName;
-    private Long age;
+    private Integer age;
 }

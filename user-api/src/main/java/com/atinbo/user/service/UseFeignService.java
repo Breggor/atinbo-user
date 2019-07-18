@@ -7,7 +7,6 @@ import com.atinbo.user.model.UserBO;
 import com.atinbo.user.model.UserParam;
 import com.atinbo.user.model.UserQueryParam;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 

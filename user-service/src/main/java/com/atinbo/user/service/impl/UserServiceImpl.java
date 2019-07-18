@@ -13,8 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,6 +76,11 @@ public class UserServiceImpl implements UseFeignService {
         return PageOutcome.ofSuccess(PageInfo.of(1, 10, 10, 100), list);
     }
 
+    /**
+     * 通过多条件查询
+     * @param param
+     * @return
+     */
     @Override
     public PageOutcome<UserBO> findUsersByCondition(UserQueryParam param) {
         List<User> all = userMapper.findAll(new Specification<User>() {

@@ -1,7 +1,6 @@
 package com.atinbo.passport.web.mapper;
 
 
-import com.atinbo.core.http.model.PageResult;
 import com.atinbo.passport.web.UserQueryForm;
 import com.atinbo.passport.web.model.UserRegisterForm;
 import com.atinbo.passport.web.model.UserVO;

@@ -10,8 +10,9 @@ import com.atinbo.passport.web.mapper.UserMapper;
 import com.atinbo.passport.web.model.UserRegisterForm;
 import com.atinbo.passport.web.model.UserVO;
 import com.atinbo.user.model.UserBO;
-import com.atinbo.user.service.UserService;
+import com.atinbo.user.service.UseFeignService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,14 +23,15 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/passport")
+@EnableAutoConfiguration
 public class PassportController {
     @Autowired
-    UserService userService;
+    private UseFeignService useFeignService;
 
     @PostMapping("/register")
     public UserVO register(@RequestBody @Validated UserRegisterForm form) throws HttpAPIException {
 
-        Outcome<UserBO> outcome = userService.register(UserMapper.INSTANCE.toUserParam(form));
+        Outcome<UserBO> outcome = useFeignService.register(UserMapper.INSTANCE.toUserParam(form));
         if (outcome.isSuccess()) {
             return UserMapper.INSTANCE.toUserVO(outcome.getData());
         } else {
@@ -41,7 +43,7 @@ public class PassportController {
     @GetMapping("/users")
     public PageResult<UserVO> users(@Validated UserQueryForm form) throws HttpAPIException {
 
-        PageOutcome<UserBO> outcome = userService.findUsers(UserMapper.INSTANCE.toUserQueryParam(form));
+        PageOutcome<UserBO> outcome = useFeignService.findUsers(UserMapper.INSTANCE.toUserQueryParam(form));
         if (outcome.isSuccess()) {
             UserMapper.INSTANCE.toUserVOs(outcome.getData());
             return PageResult.of(outcome.getPage(), outcome.getData());

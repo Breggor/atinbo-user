@@ -10,4 +10,5 @@ import lombok.experimental.Accessors;
 public class UserVO implements BaseVO {
     private Long userId;
     private String nickname;
+    private Integer age;
 }

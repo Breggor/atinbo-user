@@ -16,7 +16,6 @@ import java.io.IOException;
 @Slf4j
 @EnableDiscoveryClient
 @SpringBootApplication
-@EnableFeignClients(basePackages = "com.atinbo.user")
 public class PassportApplication {
     public static void main(String[] args) {
         SpringApplication.run(PassportApplication.class, args);

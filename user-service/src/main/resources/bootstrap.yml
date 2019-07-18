@@ -7,7 +7,6 @@ spring:
   cloud:
     nacos:
       discovery:
-        namespace: dev
         server-addr: 192.168.6.106:8848
       config:
         server-addr: 192.168.6.106:8848
@@ -15,3 +14,9 @@ spring:
 feign:
   httpclient:
     enabled: true
+
+logging:
+  path: ./logs
+  level:
+    root: INFO
+    com.atinbo: INFO

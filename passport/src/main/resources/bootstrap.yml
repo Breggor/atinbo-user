@@ -14,3 +14,9 @@ spring:
 feign:
   httpclient:
     enabled: true
+
+logging:
+  path: ./logs
+  level:
+    root: INFO
+    com.atinbo: INFO

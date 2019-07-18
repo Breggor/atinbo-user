@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author breggor
  */
 @FeignClient(name = "user-service", path = "/users", fallback = UserServiceFallback.class)
-public interface UserService {
+public interface UseFeignService {
 
     /**
      * 会员注册
@@ -36,4 +36,13 @@ public interface UserService {
      */
     @PostMapping
     PageOutcome<UserBO> findUsers(@RequestBody UserQueryParam param);
+
+    @PostMapping
+    PageOutcome<UserBO> findUsersById(UserQueryParam param);
+
+    @PostMapping
+    Outcome<UserBO> editUsersById(UserParam param);
+
+    @PostMapping
+    boolean deleteUsers(Long id);
 }

@@ -1,9 +1,9 @@
 package com.atinbo.passport.web;
 
 
-import com.atinbo.core.exception.APIException;
+import com.atinbo.core.exception.HttpAPIException;
 import com.atinbo.core.http.model.PageResult;
-import com.atinbo.core.http.status.impl.Enum500Error;
+import com.atinbo.core.http.status.impl.Http500Error;
 import com.atinbo.core.service.model.Outcome;
 import com.atinbo.core.service.model.PageOutcome;
 import com.atinbo.passport.web.mapper.UserMapper;
@@ -27,26 +27,26 @@ public class PassportController {
     UserService userService;
 
     @PostMapping("/register")
-    public UserVO register(@RequestBody @Validated UserRegisterForm form) throws APIException {
+    public UserVO register(@RequestBody @Validated UserRegisterForm form) throws HttpAPIException {
 
         Outcome<UserBO> outcome = userService.register(UserMapper.INSTANCE.toUserParam(form));
         if (outcome.isSuccess()) {
             return UserMapper.INSTANCE.toUserVO(outcome.getData());
         } else {
-            throw new APIException(Enum500Error.SYSTEM_ERROR);
+            throw new HttpAPIException(Http500Error.SYSTEM_ERROR);
         }
     }
 
 
     @GetMapping("/users")
-    public PageResult<UserVO> users(@Validated UserQueryForm form) throws APIException {
+    public PageResult<UserVO> users(@Validated UserQueryForm form) throws HttpAPIException {
 
         PageOutcome<UserBO> outcome = userService.findUsers(UserMapper.INSTANCE.toUserQueryParam(form));
         if (outcome.isSuccess()) {
             UserMapper.INSTANCE.toUserVOs(outcome.getData());
             return PageResult.of(outcome.getPage(), outcome.getData());
         } else {
-            throw new APIException(Enum500Error.SYSTEM_ERROR);
+            throw new HttpAPIException(Http500Error.SYSTEM_ERROR);
         }
     }
 }

@@ -7,8 +7,10 @@ import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author 陈路嘉
@@ -22,12 +24,9 @@ import javax.persistence.*;
 @DynamicInsert
 @DynamicUpdate
 public class User extends BaseEntity {
-    //用户Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //用户名称
     private String nickName;
-    //用户年龄
     private Integer age;
 }

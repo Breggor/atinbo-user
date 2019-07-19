@@ -15,4 +15,6 @@ public class UserQueryParam extends PageParam {
     private Long userId;
     private String nickname;
     private Integer age;
+    private String direction;
+    private String property;
 }

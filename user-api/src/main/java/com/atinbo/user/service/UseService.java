@@ -9,8 +9,6 @@ import com.atinbo.user.model.UserQueryParam;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
  * 用户接口
  *
@@ -28,7 +26,8 @@ public interface UseService {
     Outcome<UserBO> register(@RequestBody UserParam param);
 
     /**
-     *用户根据分页查找
+     * 用户根据分页查找
+     *
      * @param param
      * @return
      */
@@ -37,6 +36,7 @@ public interface UseService {
 
     /**
      * 用户根据id进行查找
+     *
      * @param userId
      * @return
      */
@@ -45,6 +45,7 @@ public interface UseService {
 
     /**
      * 根据id修改用户信息
+     *
      * @param userId
      * @param param
      * @return
@@ -54,6 +55,7 @@ public interface UseService {
 
     /**
      * 根据用户id进行删除
+     *
      * @param userId
      * @return
      */

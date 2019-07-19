@@ -1,14 +1,8 @@
 package com.atinbo.user.model;
 
 import com.atinbo.core.service.model.BaseBO;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.experimental.Accessors;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
  * @author 陈路嘉
@@ -19,4 +13,6 @@ public class UserBO implements BaseBO {
     private Long userId;
     private String nickname;
     private Integer age;
+    private String direction;
+    private String property;
 }

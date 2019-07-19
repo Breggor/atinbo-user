@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * 用户进行参数转换。
+ *
  * @author 陈路嘉
  */
 @Mapper
@@ -24,6 +25,7 @@ public interface UserMapper {
 
     /**
      * 转换注册参数为用户参数
+     *
      * @param form
      * @return
      */
@@ -31,6 +33,7 @@ public interface UserMapper {
 
     /**
      * 转换修改参数为用户参数
+     *
      * @param form
      * @return
      */
@@ -38,6 +41,7 @@ public interface UserMapper {
 
     /**
      * 转换进参转换为出参
+     *
      * @param bo
      * @return
      */
@@ -45,6 +49,7 @@ public interface UserMapper {
 
     /**
      * 将用户查询参数转换为用户参数
+     *
      * @param form
      * @return
      */
@@ -52,6 +57,7 @@ public interface UserMapper {
 
     /**
      * 将用户进参列表转换为用户出参列表
+     *
      * @param data
      * @return
      */

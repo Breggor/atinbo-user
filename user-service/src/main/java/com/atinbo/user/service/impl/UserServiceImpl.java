@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,7 +65,13 @@ public class UserServiceImpl implements UseService {
      */
     @Override
     public PageOutcome<UserBO> findAllByPage(UserQueryParam param) {
-        PageRequest pageRequest = PageRequest.of(param.getPage(), param.getSize());
+        String direction = param.getDirection();
+        if (StringUtils.isBlank(direction)) {
+            direction = "ASC";
+        }
+        Sort.Direction direction1 = Sort.Direction.fromString(direction);
+        Sort sort = new Sort(direction1, param.getProperty());
+        PageRequest pageRequest = PageRequest.of(param.getPage(), param.getSize(), sort);
         Page<User> page = userRepository.findAll(new Specification<User>() {
             @Override
             public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
@@ -76,7 +83,6 @@ public class UserServiceImpl implements UseService {
                     list.add(cb.equal(root.get("age"), param.getAge()));
                 }
                 Predicate[] p = new Predicate[list.size()];
-
                 return cb.and(list.toArray(p));
             }
         }, pageRequest);

@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 用户出参参数
+ *
  * @author 陈路嘉
  */
 @Data
@@ -21,5 +22,9 @@ public class UserVO implements BaseVO {
 
     @ApiModelProperty(value = "用户昵称", example = "孙大圣")
     private String nickname;
+
+    @ApiModelProperty(value = "用户年龄",example = "18")
     private Integer age;
+    private String direction;
+    private String property;
 }

@@ -13,6 +13,7 @@ import com.atinbo.passport.web.model.UserRegisterForm;
 import com.atinbo.passport.web.model.UserVO;
 import com.atinbo.user.model.UserBO;
 import com.atinbo.user.service.UseService;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author 陈路嘉
  */
+@Api(tags = "用户注册、查询")
 @RestController
 @RequestMapping("/passport")
 @EnableAutoConfiguration
@@ -36,8 +38,10 @@ public class PassportController {
      * @return
      * @throws HttpAPIException
      */
+    @ApiOperation(value = "用户注册")
+    @ApiResponses(@ApiResponse(code = 500001,message = "系统错误"))
     @PostMapping("/register")
-    public UserVO register(@RequestBody @Validated UserRegisterForm form) throws HttpAPIException {
+    public UserVO register(@RequestBody @Validated @ApiParam("用户基本信息") UserRegisterForm form) throws HttpAPIException {
 
         Outcome<UserBO> outcome = useService.register(UserMapper.INSTANCE.toUserParam(form));
         if (outcome.isSuccess()) {

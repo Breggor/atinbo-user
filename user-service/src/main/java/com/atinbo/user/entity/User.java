@@ -4,13 +4,13 @@ import com.atinbo.user.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Where;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 
 /**
  * @author 陈路嘉
@@ -23,6 +23,8 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @DynamicInsert
 @DynamicUpdate
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "entityCache")
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

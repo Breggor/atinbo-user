@@ -41,6 +41,7 @@ public class PassportController {
      * @return
      * @throws HttpAPIException
      */
+
     @ApiOperation(value = "用户注册")
     @ApiResponses(@ApiResponse(code = 500001, message = "系统错误"))
     @PostMapping("/register")

@@ -12,6 +12,9 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * @author 陈路嘉
+ */
 @Data
 @Entity
 @JsonIgnoreProperties

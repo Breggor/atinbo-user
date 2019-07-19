@@ -1,17 +1,14 @@
 package com.atinbo.passport.web.model;
 
-
-import com.atinbo.core.http.model.BaseVO;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 /**
- * 用户出参参数
+ * 用户普通入参参数
  * @author 陈路嘉
  */
 @Data
-@Accessors(chain = true)
-public class UserVO implements BaseVO {
+public class UserForm {
+
     private Long userId;
     private String nickname;
     private Integer age;

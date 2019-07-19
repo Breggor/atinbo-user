@@ -14,6 +14,9 @@ import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author 陈路嘉
+ */
 @Data
 @MappedSuperclass
 @DynamicInsert

@@ -5,14 +5,16 @@ import com.atinbo.core.service.model.Outcome;
 import com.atinbo.core.service.model.PageOutcome;
 import com.atinbo.user.entity.User;
 import com.atinbo.user.mapper.UserMapper;
+import com.atinbo.user.repository.UserRepository;
 import com.atinbo.user.model.UserBO;
 import com.atinbo.user.model.UserParam;
 import com.atinbo.user.model.UserQueryParam;
-import com.atinbo.user.service.UseFeignService;
+import com.atinbo.user.service.UseService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,57 +25,35 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 /**
  * 用户服务实现
  *
- * @author breggor
+ * @author 陈路嘉
  */
 @Slf4j
 @RestController
 @RequestMapping("/users")
-@EnableAutoConfiguration
-public class UserServiceImpl implements UseFeignService {
+public class UserServiceImpl implements UseService {
     @Autowired
-    private UserMapper userMapper;
+    private UserRepository userRepository;
 
     /**
      * 增加用户信息
-     * @param req
-     * @return
-     */
-    @Override
-    public Outcome<UserBO> register(@RequestBody UserParam req) {
-        log.info("register 入参===={}", req.toString());
-        /*return Outcome.ofSuccess(new UserBO().setAge(30).setNickname("breggor"));*/
-        User user=new User();
-        user.setNickName(req.getNickname());
-        user.setAge(req.getAge());
-        User save = userMapper.save(user);
-        UserBO userBO=new UserBO();
-        userBO.setNickname(save.getNickName());
-        userBO.setAge(save.getAge());
-        return Outcome.ofSuccess(userBO);
-    }
-
-    /**
-     * 查找用户信息
+     *
      * @param param
      * @return
      */
     @Override
-    public PageOutcome<UserBO> findUsers(UserQueryParam param) {
-        List<UserBO> list=new ArrayList<>();
-        UserBO userBO=new UserBO();
-        List<User> all = userMapper.findAll();
-        for (User a:all) {
-            userBO.setNickname(a.getNickName());
-            userBO.setAge(a.getAge());
-            list.add(userBO);
-        }
-        return PageOutcome.ofSuccess(PageInfo.of(1, 10, 10, 100), list);
+    public Outcome<UserBO> register(@RequestBody UserParam param) {
+        User user = UserMapper.INSTANCE.toUser(param);
+        user.setCreateAt(new Date());
+        userRepository.save(user);
+        UserBO userBo = UserMapper.INSTANCE.toUserBO(user);
+        return Outcome.ofSuccess(userBo);
     }
 
     /**
@@ -82,13 +62,14 @@ public class UserServiceImpl implements UseFeignService {
      * @return
      */
     @Override
-    public PageOutcome<UserBO> findUsersByCondition(UserQueryParam param) {
-        List<User> all = userMapper.findAll(new Specification<User>() {
+    public PageOutcome<UserBO> findAllByPage(UserQueryParam param) {
+        PageRequest pageRequest = PageRequest.of(param.getCurrentPage(), param.getPageSize());
+        Page<User> page = userRepository.findAll(new Specification<User>() {
             @Override
             public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 List<Predicate> list = new ArrayList<>();
-                if (StringUtils.isNoneBlank(param.getNickname())) {
-                    list.add(cb.equal(root.get("nickname"), param.getNickname()));
+                if (StringUtils.isNotBlank(param.getNickname())) {
+                    list.add(cb.equal(root.get("nickName"), param.getNickname()));
                 }
                 if (param.getAge() != null) {
                     list.add(cb.equal(root.get("age"), param.getAge()));
@@ -97,61 +78,46 @@ public class UserServiceImpl implements UseFeignService {
 
                 return cb.and(list.toArray(p));
             }
-        });
-        UserBO userBO=new UserBO();
-        List<UserBO> list=new ArrayList<>();
-        for (User a:all) {
-            userBO.setNickname(a.getNickName());
-            userBO.setAge(a.getAge());
-            list.add(userBO);
-        }
-        return PageOutcome.ofSuccess(PageInfo.of(1, 10, 10, 100), list);
+        }, pageRequest);
+        List<UserBO> userBOs = UserMapper.INSTANCE.toUserBOs(page.getContent());
+        return PageOutcome.ofSuccess(PageInfo.of(page.getNumber(), page.getTotalPages(), page.getSize(), (int) page.getTotalElements()), userBOs);
     }
 
     /**
      * 根据id查找用户信息
-     * @param param
+     *
      * @return
      */
     @Override
-    public PageOutcome<UserBO> findUsersById(UserQueryParam param) {
-        List<UserBO> list = new ArrayList<>();
-        User one = userMapper.getOne(param.getId());
-        UserBO userBO=new UserBO();
-        userBO.setNickname(one.getNickName());
-        userBO.setAge(one.getAge());
-        list.add(userBO);
-        return PageOutcome.ofSuccess(PageInfo.of(1, 10, 10, 100), list);
+    public UserBO findUsersById(Long userId) {
+        User one = userRepository.getOne(userId);
+        UserBO userBo = UserMapper.INSTANCE.toUserBO(one);
+        return userBo;
     }
 
     /**
      * 修改用户信息
-     * @param param
+     *
+     * @param
      * @return
      */
     @Override
-    public Outcome<UserBO> editUsersById(UserParam param) {
-        User one = userMapper.getOne(param.getId());
-       UserBO userBO=new UserBO();
-        one.setNickName(param.getNickname());
-        one.setAge(param.getAge());
-        User user = userMapper.saveAndFlush(one);
-        userBO.setNickname(user.getNickName());
-        userBO.setAge(user.getAge());
-        return Outcome.ofSuccess(userBO);
+    public Outcome<UserBO> editUsersById(Long userId, UserParam param) {
+        User user = UserMapper.INSTANCE.toUpdateUser(param,userRepository.getOne(userId));
+        userRepository.saveAndFlush(user);
+        UserBO userBo = UserMapper.INSTANCE.toUserBO(user);
+        return Outcome.ofSuccess(userBo);
     }
 
     /**
      * 删除用户信息
-     * @param param
+     *
      * @return
      */
-
     @Override
-    public boolean deleteUsers(UserParam param) {
-        userMapper.deleteById(param.getId());
+    public boolean deleteUserById(Long userId) {
+        userRepository.deleteById(userId);
         return true;
     }
-
 
 }

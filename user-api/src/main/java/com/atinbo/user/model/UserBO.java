@@ -10,10 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * @author 陈路嘉
+ */
 @Data
 @Accessors(chain = true)
 public class UserBO implements BaseBO {
-    private Long id;
+    private Long userId;
     private String nickname;
     private Integer age;
 }

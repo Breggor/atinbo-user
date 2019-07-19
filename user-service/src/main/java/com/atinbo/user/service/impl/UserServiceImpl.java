@@ -5,10 +5,10 @@ import com.atinbo.core.service.model.Outcome;
 import com.atinbo.core.service.model.PageOutcome;
 import com.atinbo.user.entity.User;
 import com.atinbo.user.mapper.UserMapper;
-import com.atinbo.user.repository.UserRepository;
 import com.atinbo.user.model.UserBO;
 import com.atinbo.user.model.UserParam;
 import com.atinbo.user.model.UserQueryParam;
+import com.atinbo.user.repository.UserRepository;
 import com.atinbo.user.service.UseService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -58,12 +58,13 @@ public class UserServiceImpl implements UseService {
 
     /**
      * 通过多条件查询
+     *
      * @param param
      * @return
      */
     @Override
     public PageOutcome<UserBO> findAllByPage(UserQueryParam param) {
-        PageRequest pageRequest = PageRequest.of(param.getCurrentPage(), param.getPageSize());
+        PageRequest pageRequest = PageRequest.of(param.getPage(), param.getSize());
         Page<User> page = userRepository.findAll(new Specification<User>() {
             @Override
             public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
@@ -103,7 +104,7 @@ public class UserServiceImpl implements UseService {
      */
     @Override
     public Outcome<UserBO> editUsersById(Long userId, UserParam param) {
-        User user = UserMapper.INSTANCE.toUpdateUser(param,userRepository.getOne(userId));
+        User user = UserMapper.INSTANCE.toUpdateUser(param, userRepository.getOne(userId));
         userRepository.saveAndFlush(user);
         UserBO userBo = UserMapper.INSTANCE.toUserBO(user);
         return Outcome.ofSuccess(userBo);

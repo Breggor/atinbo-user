@@ -1,5 +1,6 @@
 package com.atinbo.passport;
 
+import com.atinbo.mvc.AtinboMvcConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,10 +16,10 @@ import java.io.IOException;
  * @author breggor
  */
 @Slf4j
-@EnableDiscoveryClient
-@SpringBootApplication(scanBasePackages = {"com.atinbo.passport","com.atinbo.mvc"})
 @EnableSwagger2
+@EnableDiscoveryClient
 @EnableFeignClients(basePackages = "com.atinbo.user")
+@SpringBootApplication(scanBasePackageClasses = {PassportApplication.class, AtinboMvcConfig.class})
 public class PassportApplication {
 
     public static void main(String[] args) {

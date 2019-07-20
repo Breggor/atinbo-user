@@ -18,6 +18,12 @@ feign:
   httpclient:
     enabled: true
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
 logging:
   path: ./logs
   level:

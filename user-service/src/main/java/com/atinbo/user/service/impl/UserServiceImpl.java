@@ -9,6 +9,7 @@ import com.atinbo.user.model.UserBO;
 import com.atinbo.user.model.UserParam;
 import com.atinbo.user.model.UserQueryParam;
 import com.atinbo.user.repository.UserRepository;
+import com.atinbo.user.search.DynamicSpecifications;
 import com.atinbo.user.service.UseService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -72,20 +73,7 @@ public class UserServiceImpl implements UseService {
         Sort.Direction direction1 = Sort.Direction.fromString(direction);
         Sort sort = new Sort(direction1, param.getProperty());
         PageRequest pageRequest = PageRequest.of(param.getPage(), param.getSize(), sort);
-        Page<User> page = userRepository.findAll(new Specification<User>() {
-            @Override
-            public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                List<Predicate> list = new ArrayList<>();
-                if (StringUtils.isNotBlank(param.getNickname())) {
-                    list.add(cb.equal(root.get("nickName"), param.getNickname()));
-                }
-                if (param.getAge() != null) {
-                    list.add(cb.equal(root.get("age"), param.getAge()));
-                }
-                Predicate[] p = new Predicate[list.size()];
-                return cb.and(list.toArray(p));
-            }
-        }, pageRequest);
+        Page<User> page = userRepository.findAll(DynamicSpecifications.toSpecification(param), pageRequest);
         List<UserBO> userBOs = UserMapper.INSTANCE.toUserBOs(page.getContent());
         return PageOutcome.ofSuccess(PageInfo.of(page.getNumber(), page.getTotalPages(), page.getSize(), (int) page.getTotalElements()), userBOs);
     }

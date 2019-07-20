@@ -75,7 +75,7 @@ public class UserServiceImpl implements UseService {
         PageRequest pageRequest = PageRequest.of(param.getPage(), param.getSize(), sort);
         Page<User> page = userRepository.findAll(DynamicSpecifications.toSpecification(param), pageRequest);
         List<UserBO> userBOs = UserMapper.INSTANCE.toUserBOs(page.getContent());
-        return PageOutcome.ofSuccess(PageInfo.of(page.getNumber(), page.getTotalPages(), page.getSize(), (int) page.getTotalElements()), userBOs);
+        return PageOutcome.ofSuccess(PageInfo.of(page.getNumber(),page.getSize(), page.getTotalPages(), page.getTotalElements()), userBOs);
     }
 
     /**

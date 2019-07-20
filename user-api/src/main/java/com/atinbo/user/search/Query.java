@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 查询方式
+ * 查询方式 加上注解的属性为查询字段
  * @author zenghao
  * @date 2019-07-20
  */
@@ -21,15 +21,9 @@ public @interface Query {
     Operator operator() default Operator.EQ;
 
     /**
-     * 查询字段 不填写默认为注解字段名
+     * 查询字段名 不填写默认为注解属性名
      * @return
      */
     String field() default "";
-
-    /**
-     * 是否忽略该字段 默认不忽略
-     * @return
-     */
-    boolean ignore() default false;
 
 }

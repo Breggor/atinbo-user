@@ -20,8 +20,6 @@ public class UserQueryParam extends PageParam implements QueryParam {
     private String nickname;
     private Integer age;
 
-    @Query(ignore = true)
     private String direction;
-    @Query(ignore = true)
     private String property;
 }

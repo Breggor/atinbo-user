@@ -28,9 +28,6 @@ public class DynamicSpecifications {
                         continue;
                     }
                     queryMode = field.getAnnotation(Query.class);
-                    if (queryMode.ignore()){
-                        continue;
-                    }
                     fieldName = StringUtils.isBlank(queryMode.field()) ? field.getName() : queryMode.field();
                     fieldValue = ReflectionUtils.invokeGetterMethod(queryParam, field.getName());
                     // logic operator

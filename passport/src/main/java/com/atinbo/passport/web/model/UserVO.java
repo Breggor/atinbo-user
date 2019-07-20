@@ -25,6 +25,4 @@ public class UserVO implements BaseVO {
 
     @ApiModelProperty(value = "用户年龄",example = "18")
     private Integer age;
-    private String direction;
-    private String property;
 }

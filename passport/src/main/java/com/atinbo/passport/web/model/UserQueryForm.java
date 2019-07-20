@@ -1,18 +1,20 @@
-package com.atinbo.user.model;
+package com.atinbo.passport.web.model;
 
-import com.atinbo.core.service.model.BaseBO;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 /**
+ * 用户查询参数
+ *
  * @author 陈路嘉
  */
 @Data
-@Accessors(chain = true)
-public class UserBO implements BaseBO {
+public class UserQueryForm {
     private Long userId;
     private String nickname;
     private Integer age;
     private String direction;
     private String property;
+    private Integer page;
+    private Integer size;
+
 }

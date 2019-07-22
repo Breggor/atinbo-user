@@ -15,7 +15,6 @@ import com.atinbo.user.model.UserBO;
 import com.atinbo.user.service.UseService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
  * @EnableAutoConfiguration可以帮助SpringBoot应用将所有符合条件的
  * @Configuration配置都加载到当前SpringBoot创建并使用的IoC容器。
  */
+@Api(tags = "用户注册、查询")
 @RestController
 @RequestMapping("/passport")
 public class PassportController {
@@ -39,7 +39,6 @@ public class PassportController {
      * @return
      * @throws HttpAPIException
      */
-
     @ApiOperation(value = "用户注册")
     @ApiResponses(@ApiResponse(code = 500001, message = "系统错误"))
     @PostMapping("/register")

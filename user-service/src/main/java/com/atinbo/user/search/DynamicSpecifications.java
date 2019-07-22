@@ -22,16 +22,22 @@ public class DynamicSpecifications {
 
                 String fieldName;
                 Object fieldValue;
+                Operator operator;
                 Query queryMode;
                 for (Field field : fieldList) {
-                    if (!field.isAnnotationPresent(Query.class)) {
-                        continue;
+                    if (field.isAnnotationPresent(Query.class)) {
+                        queryMode = field.getAnnotation(Query.class);
+                        if (queryMode.ignore()){
+                            continue;
+                        }
+                        fieldName = StringUtils.isBlank(queryMode.field()) ? field.getName() : queryMode.field();
+                        operator = queryMode.operator();
+                    }else {
+                        fieldName = field.getName();
+                        operator = Operator.EQ;
                     }
-                    queryMode = field.getAnnotation(Query.class);
-                    fieldName = StringUtils.isBlank(queryMode.field()) ? field.getName() : queryMode.field();
                     fieldValue = ReflectionUtils.invokeGetterMethod(queryParam, field.getName());
-                    // logic operator
-                    switch (queryMode.operator()) {
+                    switch (operator) {
                         case EQ:
                             predicates.add(builder.equal(root.get(fieldName), fieldValue));
                             break;
@@ -68,7 +74,6 @@ public class DynamicSpecifications {
                 if (!predicates.isEmpty()) {
                     return builder.and(predicates.toArray(new Predicate[predicates.size()]));
                 }
-
                 return builder.conjunction();
             }
         };

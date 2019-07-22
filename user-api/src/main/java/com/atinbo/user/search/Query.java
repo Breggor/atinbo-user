@@ -26,4 +26,10 @@ public @interface Query {
      */
     String field() default "";
 
+    /**
+     * 是否忽略该字段 默认不忽略
+     * @return
+     */
+    boolean ignore() default false;
+
 }

@@ -1,14 +1,12 @@
 package com.atinbo.user;
 
+import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import java.io.IOException;
-
 
 /**
  * 用户服务
@@ -16,9 +14,8 @@ import java.io.IOException;
  * @author breggor
  */
 @EnableCaching
-@EnableFeignClients
-@SpringBootApplication
-@EnableDiscoveryClient
+@EnableAdminServer
+@SpringCloudApplication
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 public class UserApplication {
     public static void main(String[] args) {

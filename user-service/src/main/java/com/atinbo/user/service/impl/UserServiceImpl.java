@@ -4,6 +4,7 @@ import com.atinbo.core.base.PageInfo;
 import com.atinbo.core.query.DynamicSpecifications;
 import com.atinbo.core.service.model.Outcome;
 import com.atinbo.core.service.model.PageOutcome;
+import com.atinbo.log.annotation.SysLog;
 import com.atinbo.user.entity.User;
 import com.atinbo.user.mapper.UserMapper;
 import com.atinbo.user.model.UserBO;
@@ -44,6 +45,7 @@ public class UserServiceImpl implements UseService {
      * @return
      */
     @Override
+    @SysLog(value = "用户注册")
     public Outcome<UserBO> register(@RequestBody UserParam param) {
         User user = UserMapper.INSTANCE.toUser(param);
         user.setCreateAt(new Date());
@@ -59,6 +61,7 @@ public class UserServiceImpl implements UseService {
      * @return
      */
     @Override
+    @SysLog(value = "用户分页条件查询")
     public PageOutcome<UserBO> findAllByPage(UserQueryParam param) {
         String direction = param.getDirection();
         if (StringUtils.isBlank(direction)) {
@@ -78,6 +81,7 @@ public class UserServiceImpl implements UseService {
      * @return
      */
     @Override
+    @SysLog(value = "用户主键查询")
     public UserBO findUsersById(Long userId) {
         User one = userRepository.getOne(userId);
         UserBO userBo = UserMapper.INSTANCE.toUserBO(one);
@@ -91,6 +95,7 @@ public class UserServiceImpl implements UseService {
      * @return
      */
     @Override
+    @SysLog(value = "用户信息编辑")
     public Outcome<UserBO> editUsersById(Long userId, UserParam param) {
         User user = UserMapper.INSTANCE.toUpdateUser(param, userRepository.getOne(userId));
         userRepository.saveAndFlush(user);
@@ -104,6 +109,7 @@ public class UserServiceImpl implements UseService {
      * @return
      */
     @Override
+    @SysLog(value = "用户删除")
     public boolean deleteUserById(Long userId) {
         userRepository.deleteById(userId);
         return true;

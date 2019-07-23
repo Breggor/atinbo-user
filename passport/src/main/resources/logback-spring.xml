@@ -60,6 +60,11 @@
         </encoder>
     </appender>
 
+    <logger name="com.alibaba.nacos" level="${logging.level}" additivity="false">
+        <appender-ref ref="ROOT-APPENDER"/>
+        <appender-ref ref="ERROR-APPENDER"/>
+    </logger>
+
     <root level="${logging.level}">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="ROOT-APPENDER"/>

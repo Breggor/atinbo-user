@@ -82,10 +82,10 @@ public class UserServiceImpl implements UseService {
      */
     @Override
     @SysLog(value = "用户主键查询")
-    public UserBO findUsersById(Long userId) {
+    public Outcome<UserBO> findUsersById(Long userId) {
         User one = userRepository.getOne(userId);
         UserBO userBo = UserMapper.INSTANCE.toUserBO(one);
-        return userBo;
+        return Outcome.ofSuccess(userBo);
     }
 
     /**

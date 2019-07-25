@@ -41,7 +41,7 @@ public interface UseService {
      * @return
      */
     @GetMapping("/{userId}")
-    UserBO findUsersById(@PathVariable(value = "userId") Long userId);
+    Outcome<UserBO> findUsersById(@PathVariable(value = "userId") Long userId);
 
     /**
      * 根据id修改用户信息

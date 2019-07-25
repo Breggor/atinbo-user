@@ -1,6 +1,7 @@
 package com.atinbo.passport.web.mapper;
 
 
+import com.atinbo.core.service.model.Outcome;
 import com.atinbo.passport.web.model.UserForm;
 import com.atinbo.passport.web.model.UserQueryForm;
 import com.atinbo.passport.web.model.UserRegisterForm;
@@ -45,7 +46,7 @@ public interface UserMapper {
      * @param bo
      * @return
      */
-    UserVO toUserVO(UserBO bo);
+    Outcome<UserBO> toUserVO(UserBO bo);
 
     /**
      * 将用户查询参数转换为用户参数

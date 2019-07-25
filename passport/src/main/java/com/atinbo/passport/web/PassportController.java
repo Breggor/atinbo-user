@@ -42,7 +42,7 @@ public class PassportController {
     @ApiOperation(value = "用户注册")
     @ApiResponses(@ApiResponse(code = 500001, message = "系统错误"))
     @PostMapping("/register")
-    public UserVO register(@RequestBody @Validated @ApiParam("用户注册基本信息") UserRegisterForm form) throws HttpAPIException {
+    public Outcome<UserBO> register(@RequestBody @Validated @ApiParam("用户注册基本信息") UserRegisterForm form) throws HttpAPIException {
 
         Outcome<UserBO> outcome = useService.register(UserMapper.INSTANCE.toUserParam(form));
         if (outcome.isSuccess()) {
@@ -82,11 +82,11 @@ public class PassportController {
     @ApiOperation(value = "根据ID查询用户")
     @ApiResponses(@ApiResponse(code = 500001, message = "系统错误"))
     @GetMapping("/{userId}")
-    public UserVO findUsersById(@PathVariable(value = "userId") @ApiParam("userId") Long userId) throws HttpAPIException {
+    public Outcome<UserBO> findUsersById(@PathVariable(value = "userId") @ApiParam("userId") Long userId) throws HttpAPIException {
 
-        UserBO user = useService.findUsersById(userId);
-        if (user != null) {
-            return UserMapper.INSTANCE.toUserVO(user);
+        Outcome<UserBO> user = useService.findUsersById(userId);
+        if (user.isSuccess()) {
+            return UserMapper.INSTANCE.toUserVO(user.getData());
         } else {
             throw new HttpAPIException(HttpStatusCode.ERR_500);
         }
@@ -102,7 +102,7 @@ public class PassportController {
     @ApiOperation(value = "修改用户")
     @ApiResponses(@ApiResponse(code = 500001, message = "系统错误"))
     @PutMapping("/{userId}")
-    public UserVO editUser(@RequestBody @Validated @ApiParam("用户参数") UserForm form, @ApiParam("用户ID") @PathVariable("userId") Long userId) throws HttpAPIException {
+    public Outcome<UserBO> editUser(@RequestBody @Validated @ApiParam("用户参数") UserForm form, @ApiParam("用户ID") @PathVariable("userId") Long userId) throws HttpAPIException {
 
         Outcome<UserBO> outcome = useService.editUsersById(userId, UserMapper.INSTANCE.toUpdateUserParam(form));
         if (outcome.isSuccess()) {

@@ -1,29 +1,38 @@
 package com.atinbo.user.fallback;
 
 
-public class UserServiceFallback  {
-   /*@Override
+import com.atinbo.core.service.model.Outcome;
+import com.atinbo.core.service.model.PageOutcome;
+import com.atinbo.user.model.UserBO;
+import com.atinbo.user.model.UserParam;
+import com.atinbo.user.model.UserQueryParam;
+import com.atinbo.user.service.UseService;
+
+public class UserServiceFallback implements UseService {
+   @Override
     public Outcome<UserBO> register(UserParam req) {
         return Outcome.<UserBO>ofFail("接口异常");
     }
 
     @Override
-    public PageOutcome<UserBO> findAllUser(UserQueryParam param) {
-        return PageOutcome.<UserBO>ofFail("接口异常");
+    public PageOutcome<UserBO> findAllByPage(UserQueryParam param) {
+        return PageOutcome.ofFail("接口异常");
     }
 
     @Override
-    public PageOutcome<UserBO> findUsersById(UserQueryParam param) {
-        return PageOutcome.<UserBO>ofFail("接口异常");
-    }
-
-    @Override
-    public Outcome<UserBO> editUsersById(UserParam param) {
+    public Outcome<UserBO> findUsersById(Long userId) {
         return Outcome.ofFail("接口异常");
     }
 
     @Override
-    public boolean deleteUsers(Long id) {
+    public Outcome<UserBO> editUsersById(Long userId, UserParam param) {
+        return Outcome.ofFail("接口异常");
+    }
+
+    @Override
+    public boolean deleteUserById(Long userId) {
         return false;
-    }*/
+    }
+
+
 }

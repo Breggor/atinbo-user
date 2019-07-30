@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * @author breggor
  */
 @FeignClient(name = "user-service", path = "/users", fallback = UserServiceFallback.class)
-public interface UseService {
+public interface UserService {
     /**
      * 用户注册
      *

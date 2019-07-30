@@ -12,7 +12,7 @@ import com.atinbo.passport.web.model.UserQueryForm;
 import com.atinbo.passport.web.model.UserRegisterForm;
 import com.atinbo.passport.web.model.UserVO;
 import com.atinbo.user.model.UserBO;
-import com.atinbo.user.service.UseService;
+import com.atinbo.user.service.UserService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/passport")
 public class PassportController {
     @Autowired
-    private UseService useService;
+    private UserService userService;
 
     /**
      * 注册用户
@@ -44,7 +44,7 @@ public class PassportController {
     @PostMapping("/register")
     public Outcome<UserBO> register(@RequestBody @Validated @ApiParam("用户注册基本信息") UserRegisterForm form) throws HttpAPIException {
 
-        Outcome<UserBO> outcome = useService.register(UserMapper.INSTANCE.toUserParam(form));
+        Outcome<UserBO> outcome = userService.register(UserMapper.INSTANCE.toUserParam(form));
         if (outcome.isSuccess()) {
             return UserMapper.INSTANCE.toUserVO(outcome.getData());
         } else {
@@ -65,7 +65,7 @@ public class PassportController {
     @GetMapping
     public PageResult<UserVO> findUserByPage(@Validated @ApiParam("用户查询参数") UserQueryForm form) throws HttpAPIException {
 
-        PageOutcome<UserBO> outcome = useService.findAllByPage(UserMapper.INSTANCE.toUserQueryParam(form));
+        PageOutcome<UserBO> outcome = userService.findAllByPage(UserMapper.INSTANCE.toUserQueryParam(form));
         if (outcome.isSuccess()) {
             return PageResult.of(outcome.getPage(), UserMapper.INSTANCE.toUserVOs(outcome.getData()));
         } else {
@@ -84,7 +84,7 @@ public class PassportController {
     @GetMapping("/{userId}")
     public Outcome<UserBO> findUsersById(@PathVariable(value = "userId") @ApiParam("userId") Long userId) throws HttpAPIException {
 
-        Outcome<UserBO> user = useService.findUsersById(userId);
+        Outcome<UserBO> user = userService.findUsersById(userId);
         if (user.isSuccess()) {
             return UserMapper.INSTANCE.toUserVO(user.getData());
         } else {
@@ -104,7 +104,7 @@ public class PassportController {
     @PutMapping("/{userId}")
     public Outcome<UserBO> editUser(@RequestBody @Validated @ApiParam("用户参数") UserForm form, @ApiParam("用户ID") @PathVariable("userId") Long userId) throws HttpAPIException {
 
-        Outcome<UserBO> outcome = useService.editUsersById(userId, UserMapper.INSTANCE.toUpdateUserParam(form));
+        Outcome<UserBO> outcome = userService.editUsersById(userId, UserMapper.INSTANCE.toUpdateUserParam(form));
         if (outcome.isSuccess()) {
             return UserMapper.INSTANCE.toUserVO(outcome.getData());
         } else {
@@ -123,7 +123,7 @@ public class PassportController {
     @DeleteMapping("/{userId}")
     public Boolean deleteUser(@PathVariable(value = "userId") @ApiParam("用户ID") Long userId) throws HttpAPIException {
 
-        boolean result = useService.deleteUserById(userId);
+        boolean result = userService.deleteUserById(userId);
         if (result) {
             return true;
         } else {

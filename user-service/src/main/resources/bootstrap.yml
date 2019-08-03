@@ -19,6 +19,16 @@ spring:
         server-addr: 192.168.6.106:8848
         file-extension: yml
 
+  zipkin:
+    enabled: true
+    base-url: http://192.168.6.106:9686
+  sleuth:
+    web:
+      client:
+        enabled: true
+    sampler:
+      probability: 1.0
+
 #启用httpclient
 feign:
   httpclient:

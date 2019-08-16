@@ -1,6 +1,6 @@
 package com.atinbo.user.service.impl;
 
-import com.atinbo.core.base.PageInfo;
+import com.atinbo.core.model.PageInfo;
 import com.atinbo.core.query.DynamicSpecifications;
 import com.atinbo.core.service.model.Outcome;
 import com.atinbo.core.service.model.PageOutcome;

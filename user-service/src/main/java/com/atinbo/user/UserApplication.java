@@ -1,5 +1,6 @@
 package com.atinbo.user;
 
+import com.atinbo.dislock.annotation.EnableDisLock;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.SpringCloudApplication;
@@ -14,6 +15,7 @@ import java.io.IOException;
  */
 @EnableCaching
 @SpringCloudApplication
+@EnableDisLock
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 public class UserApplication {
     public static void main(String[] args) {

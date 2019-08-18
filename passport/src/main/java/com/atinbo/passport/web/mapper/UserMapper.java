@@ -46,7 +46,7 @@ public interface UserMapper {
      * @param bo
      * @return
      */
-    Outcome<UserBO> toUserVO(UserBO bo);
+    UserVO toUserVO(UserBO bo);
 
     /**
      * 将用户查询参数转换为用户参数

@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.io.IOException;
 
@@ -17,6 +18,7 @@ import java.io.IOException;
 @Slf4j
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = "com.atinbo.user")
+@EnableSwagger2
 @SpringBootApplication(scanBasePackageClasses = {PassportApplication.class, AtinboMvcConfig.class})
 public class PassportApplication {
 

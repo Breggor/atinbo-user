@@ -42,7 +42,7 @@ public class PassportController {
     @ApiOperation(value = "用户注册")
     @ApiResponses(@ApiResponse(code = 500001, message = "系统错误"))
     @PostMapping("/register")
-    public Outcome<UserBO> register(@RequestBody @Validated @ApiParam("用户注册基本信息") UserRegisterForm form) throws HttpAPIException {
+    public UserVO register(@RequestBody @Validated @ApiParam("用户注册基本信息") UserRegisterForm form) throws HttpAPIException {
 
         Outcome<UserBO> outcome = userService.register(UserMapper.INSTANCE.toUserParam(form));
         if (outcome.isSuccess()) {
@@ -82,7 +82,7 @@ public class PassportController {
     @ApiOperation(value = "根据ID查询用户")
     @ApiResponses(@ApiResponse(code = 500001, message = "系统错误"))
     @GetMapping("/{userId}")
-    public Outcome<UserBO> findUsersById(@PathVariable(value = "userId") @ApiParam("userId") Long userId) throws HttpAPIException {
+    public UserVO findUsersById(@PathVariable(value = "userId") @ApiParam("userId") Long userId) throws HttpAPIException {
 
         Outcome<UserBO> user = userService.findUsersById(userId);
         if (user.isSuccess()) {
@@ -102,7 +102,7 @@ public class PassportController {
     @ApiOperation(value = "修改用户")
     @ApiResponses(@ApiResponse(code = 500001, message = "系统错误"))
     @PutMapping("/{userId}")
-    public Outcome<UserBO> editUser(@RequestBody @Validated @ApiParam("用户参数") UserForm form, @ApiParam("用户ID") @PathVariable("userId") Long userId) throws HttpAPIException {
+    public UserVO editUser(@RequestBody @Validated @ApiParam("用户参数") UserForm form, @ApiParam("用户ID") @PathVariable("userId") Long userId) throws HttpAPIException {
 
         Outcome<UserBO> outcome = userService.editUsersById(userId, UserMapper.INSTANCE.toUpdateUserParam(form));
         if (outcome.isSuccess()) {

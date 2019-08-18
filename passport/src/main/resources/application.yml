@@ -1,0 +1,10 @@
+swagger:
+  name: passport
+  title: 用户令牌模块
+  description: 用于用户注册、登录和获取用户信息等
+  version: 1.0.0
+  license: LICENSE-2.0
+  license-url: https://www.apache.org/licenses/LICENSE-2.0
+  contact-name: zenghao
+  contact-url: https://gitee.com/epdcgsi
+  contact-email: epdcgsi@dingtalk.com

@@ -118,12 +118,21 @@
 
         <dependency>
             <groupId>com.atinbo</groupId>
-            <artifactId>atinbo-log-spring-boot-starter</artifactId>
+            <artifactId>log-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atinbo</groupId>
+            <artifactId>dislock-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.atinbo</groupId>
             <artifactId>atinbo-dal-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.atinbo</groupId>
+            <artifactId>atinbo-core</artifactId>
         </dependency>
 
         <dependency>

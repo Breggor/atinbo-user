@@ -67,7 +67,7 @@
 
         <dependency>
             <groupId>com.atinbo</groupId>
-            <artifactId>atinbo-swagger-spring-boot-starter</artifactId>
+            <artifactId>swagger-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>

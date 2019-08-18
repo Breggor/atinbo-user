@@ -4,6 +4,8 @@ import com.atinbo.core.model.PageInfo;
 import com.atinbo.core.query.DynamicSpecifications;
 import com.atinbo.core.service.model.Outcome;
 import com.atinbo.core.service.model.PageOutcome;
+import com.atinbo.dislock.annotation.DisLock;
+import com.atinbo.dislock.constant.DisLockType;
 import com.atinbo.log.annotation.SysLog;
 import com.atinbo.user.entity.User;
 import com.atinbo.user.mapper.UserMapper;
@@ -46,6 +48,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @SysLog(value = "用户注册")
+    @DisLock(lockType = DisLockType.WRITE)
     public Outcome<UserBO> register(@RequestBody UserParam param) {
         User user = UserMapper.INSTANCE.toUser(param);
         user.setCreateAt(new Date());
@@ -62,6 +65,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @SysLog(value = "用户分页条件查询")
+    @DisLock(lockType = DisLockType.READ)
     public PageOutcome<UserBO> findAllByPage(UserQueryParam param) {
         String direction = param.getDirection();
         if (StringUtils.isBlank(direction)) {

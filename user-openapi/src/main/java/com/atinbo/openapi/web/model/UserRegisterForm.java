@@ -1,4 +1,4 @@
-package com.atinbo.passport.web.model;
+package com.atinbo.openapi.web.model;
 
 
 import io.swagger.annotations.ApiModel;

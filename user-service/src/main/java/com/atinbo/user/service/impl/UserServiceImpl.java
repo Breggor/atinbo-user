@@ -49,8 +49,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @SysLog(value = "用户注册")
-    @DisLock(lockType = DisLockType.WRITE)
-    @LockKey(value = {"UserParam.userId","UserParam.nickname"})
+    @DisLock(lockType = DisLockType.MULTI)
+    @LockKey({"UserParam.userId","UserParam.username"})
     public Outcome<UserBO> register(@RequestBody UserParam param) {
         User user = UserMapper.INSTANCE.toUser(param);
         user.setCreateAt(new Date());

@@ -1,4 +1,4 @@
-package com.atinbo.passport.web;
+package com.atinbo.openapi.web;
 
 
 import com.atinbo.core.exception.HttpAPIException;
@@ -6,11 +6,11 @@ import com.atinbo.core.http.model.PageResult;
 import com.atinbo.core.http.status.HttpStatusCode;
 import com.atinbo.core.service.model.Outcome;
 import com.atinbo.core.service.model.PageOutcome;
-import com.atinbo.passport.web.mapper.UserMapper;
-import com.atinbo.passport.web.model.UserForm;
-import com.atinbo.passport.web.model.UserQueryForm;
-import com.atinbo.passport.web.model.UserRegisterForm;
-import com.atinbo.passport.web.model.UserVO;
+import com.atinbo.openapi.web.mapper.UserMapper;
+import com.atinbo.openapi.web.model.UserForm;
+import com.atinbo.openapi.web.model.UserQueryForm;
+import com.atinbo.openapi.web.model.UserRegisterForm;
+import com.atinbo.openapi.web.model.UserVO;
 import com.atinbo.user.model.UserBO;
 import com.atinbo.user.service.UserService;
 import io.swagger.annotations.*;
@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.*;
  */
 @Api(tags = "用户注册、查询")
 @RestController
-@RequestMapping("/passport")
-public class PassportController {
+@RequestMapping("/users")
+public class UserController {
     @Autowired
     private UserService userService;
 
@@ -50,6 +50,14 @@ public class PassportController {
         } else {
             throw new HttpAPIException(HttpStatusCode.ERR_500);
         }
+    }
+
+    /**
+     * test
+     */
+    @GetMapping("/test")
+    public UserVO test() throws HttpAPIException {
+        return new UserVO().setAge(1000).setNickname("breggor").setUserId(1L);
     }
 
 

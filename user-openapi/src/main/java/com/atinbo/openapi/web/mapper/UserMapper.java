@@ -1,11 +1,10 @@
-package com.atinbo.passport.web.mapper;
+package com.atinbo.openapi.web.mapper;
 
 
-import com.atinbo.core.service.model.Outcome;
-import com.atinbo.passport.web.model.UserForm;
-import com.atinbo.passport.web.model.UserQueryForm;
-import com.atinbo.passport.web.model.UserRegisterForm;
-import com.atinbo.passport.web.model.UserVO;
+import com.atinbo.openapi.web.model.UserForm;
+import com.atinbo.openapi.web.model.UserQueryForm;
+import com.atinbo.openapi.web.model.UserRegisterForm;
+import com.atinbo.openapi.web.model.UserVO;
 import com.atinbo.user.model.UserBO;
 import com.atinbo.user.model.UserParam;
 import com.atinbo.user.model.UserQueryParam;

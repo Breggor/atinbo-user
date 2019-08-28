@@ -1,4 +1,4 @@
-package com.atinbo.passport;
+package com.atinbo.openapi;
 
 import com.atinbo.mvc.AtinboMvcConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +19,11 @@ import java.io.IOException;
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = "com.atinbo.user")
 @EnableSwagger2
-@SpringBootApplication(scanBasePackageClasses = {PassportApplication.class, AtinboMvcConfig.class})
-public class PassportApplication {
+@SpringBootApplication(scanBasePackageClasses = {OpenapiApplication.class, AtinboMvcConfig.class})
+public class OpenapiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PassportApplication.class, args);
+        SpringApplication.run(OpenapiApplication.class, args);
         try {
             System.in.read();
         } catch (IOException e) {

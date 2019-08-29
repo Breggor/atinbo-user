@@ -1,7 +1,7 @@
 package com.atinbo.user.feign;
 
 
-import com.atinbo.core.query.DynamicSpecifications;
+import com.atinbo.jpa.DynamicSpecifications;
 import com.atinbo.dislock.annotation.DisLock;
 import com.atinbo.dislock.annotation.LockKey;
 import com.atinbo.dislock.constant.DisLockType;

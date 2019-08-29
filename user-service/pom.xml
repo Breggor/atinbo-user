@@ -130,9 +130,15 @@
             <groupId>com.atinbo</groupId>
             <artifactId>atinbo-dal-cache</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.atinbo</groupId>
             <artifactId>atinbo-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atinbo</groupId>
+            <artifactId>atinbo-dal-jpa</artifactId>
         </dependency>
 
         <dependency>

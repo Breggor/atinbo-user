@@ -1,7 +1,7 @@
 package com.atinbo.user.mapper;
 
 import com.atinbo.user.entity.User;
-import com.atinbo.user.model.UserBO;
+import com.atinbo.user.model.UserDTO;
 import com.atinbo.user.model.UserParam;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -36,7 +36,7 @@ public interface UserMapper {
      * @return
      */
     @Mappings({@Mapping(target = "nickname", source = "nickName"), @Mapping(target = "userId", source = "id")})
-    UserBO toUserBO(User user);
+    UserDTO toUserBO(User user);
 
     /**
      * 将用户列表转换为用户进参列表
@@ -44,7 +44,7 @@ public interface UserMapper {
      * @param all
      * @return
      */
-    List<UserBO> toUserBOs(List<User> all);
+    List<UserDTO> toUserBOs(List<User> all);
 
     /**
      * 将用户修改参数转换为用户参数

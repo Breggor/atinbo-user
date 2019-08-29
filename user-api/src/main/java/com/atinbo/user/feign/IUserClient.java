@@ -1,9 +1,9 @@
-package com.atinbo.user.service;
+package com.atinbo.user.feign;
 
-import com.atinbo.core.service.model.Outcome;
-import com.atinbo.core.service.model.PageOutcome;
-import com.atinbo.user.fallback.UserServiceFallback;
-import com.atinbo.user.model.UserBO;
+import com.atinbo.model.Outcome;
+import com.atinbo.model.PageOutcome;
+import com.atinbo.user.fallback.UserClientFallback;
+import com.atinbo.user.model.UserDTO;
 import com.atinbo.user.model.UserParam;
 import com.atinbo.user.model.UserQueryParam;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author breggor
  */
-@FeignClient(name = "user-service", path = "/users", fallback = UserServiceFallback.class)
-public interface UserService {
+@FeignClient(name = "user-service", path = "/users", fallback = UserClientFallback.class)
+public interface IUserClient {
     /**
      * 用户注册
      *
@@ -23,7 +23,7 @@ public interface UserService {
      * @return
      */
     @PostMapping
-    Outcome<UserBO> register(@RequestBody UserParam param);
+    Outcome<UserDTO> register(@RequestBody UserParam param);
 
     /**
      * 用户根据分页查找
@@ -32,7 +32,7 @@ public interface UserService {
      * @return
      */
     @GetMapping
-    PageOutcome<UserBO> findAllByPage(@RequestBody UserQueryParam param);
+    PageOutcome<UserDTO> findAllByPage(@RequestBody UserQueryParam param);
 
     /**
      * 用户根据id进行查找
@@ -41,7 +41,7 @@ public interface UserService {
      * @return
      */
     @GetMapping("/{userId}")
-    Outcome<UserBO> findUsersById(@PathVariable(value = "userId") Long userId);
+    Outcome<UserDTO> findUsersById(@PathVariable(value = "userId") Long userId);
 
     /**
      * 根据id修改用户信息
@@ -51,7 +51,7 @@ public interface UserService {
      * @return
      */
     @PutMapping("/{userId}")
-    Outcome<UserBO> editUsersById(@PathVariable(value = "userId") Long userId, @RequestBody UserParam param);
+    Outcome<UserDTO> editUsersById(@PathVariable(value = "userId") Long userId, @RequestBody UserParam param);
 
     /**
      * 根据用户id进行删除

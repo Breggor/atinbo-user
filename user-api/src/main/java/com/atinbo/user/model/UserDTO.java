@@ -1,15 +1,18 @@
 package com.atinbo.user.model;
 
-import com.atinbo.core.service.model.BaseBO;
+
+import com.atinbo.model.BaseBO;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 /**
- * @author 陈路嘉
+ * @author breggor
  */
 @Data
 @Accessors(chain = true)
-public class UserBO implements BaseBO {
+public class UserDTO implements Serializable {
     private Long userId;
     private String nickname;
     private Integer age;

@@ -1,20 +1,20 @@
-package com.atinbo.user.service.impl;
+package com.atinbo.user.feign;
 
-import com.atinbo.core.model.PageInfo;
+
 import com.atinbo.core.query.DynamicSpecifications;
-import com.atinbo.core.service.model.Outcome;
-import com.atinbo.core.service.model.PageOutcome;
 import com.atinbo.dislock.annotation.DisLock;
 import com.atinbo.dislock.annotation.LockKey;
 import com.atinbo.dislock.constant.DisLockType;
 import com.atinbo.log.annotation.SysLog;
+import com.atinbo.model.Outcome;
+import com.atinbo.model.PageOutcome;
+import com.atinbo.model.Pagination;
 import com.atinbo.user.entity.User;
 import com.atinbo.user.mapper.UserMapper;
-import com.atinbo.user.model.UserBO;
+import com.atinbo.user.model.UserDTO;
 import com.atinbo.user.model.UserParam;
 import com.atinbo.user.model.UserQueryParam;
 import com.atinbo.user.repository.UserRepository;
-import com.atinbo.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/users")
-public class UserServiceImpl implements UserService {
+public class UserClient implements IUserClient {
     @Autowired
     private UserRepository userRepository;
 
@@ -50,12 +50,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @SysLog(value = "用户注册")
     @DisLock(lockType = DisLockType.MULTI)
-    @LockKey({"UserParam.userId","UserParam.username"})
-    public Outcome<UserBO> register(@RequestBody UserParam param) {
+    @LockKey({"UserParam.userId", "UserParam.username"})
+    public Outcome<UserDTO> register(@RequestBody UserParam param) {
         User user = UserMapper.INSTANCE.toUser(param);
         user.setCreateAt(new Date());
         userRepository.save(user);
-        UserBO userBo = UserMapper.INSTANCE.toUserBO(user);
+        UserDTO userBo = UserMapper.INSTANCE.toUserBO(user);
         return Outcome.ofSuccess(userBo);
     }
 
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @SysLog(value = "用户分页条件查询")
-    public PageOutcome<UserBO> findAllByPage(UserQueryParam param) {
+    public PageOutcome<UserDTO> findAllByPage(UserQueryParam param) {
         String direction = param.getDirection();
         if (StringUtils.isBlank(direction)) {
             direction = "ASC";
@@ -76,8 +76,8 @@ public class UserServiceImpl implements UserService {
         Sort sort = new Sort(direction1, param.getProperty());
         PageRequest pageRequest = PageRequest.of(param.getPage(), param.getSize(), sort);
         Page<User> page = userRepository.findAll(DynamicSpecifications.toSpecification(param), pageRequest);
-        List<UserBO> userBOs = UserMapper.INSTANCE.toUserBOs(page.getContent());
-        return PageOutcome.ofSuccess(PageInfo.of(page.getNumber(),page.getSize(), page.getTotalPages(), page.getTotalElements()), userBOs);
+        List<UserDTO> userBOs = UserMapper.INSTANCE.toUserBOs(page.getContent());
+        return PageOutcome.ofSuccess(Pagination.of(page.getNumber(), page.getSize(), page.getTotalPages(), page.getTotalElements()), userBOs);
     }
 
     /**
@@ -87,9 +87,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @SysLog(value = "用户主键查询")
-    public Outcome<UserBO> findUsersById(Long userId) {
+    public Outcome<UserDTO> findUsersById(Long userId) {
         User one = userRepository.getOne(userId);
-        UserBO userBo = UserMapper.INSTANCE.toUserBO(one);
+        UserDTO userBo = UserMapper.INSTANCE.toUserBO(one);
         return Outcome.ofSuccess(userBo);
     }
 
@@ -101,10 +101,10 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @SysLog(value = "用户信息编辑")
-    public Outcome<UserBO> editUsersById(Long userId, UserParam param) {
+    public Outcome<UserDTO> editUsersById(Long userId, UserParam param) {
         User user = UserMapper.INSTANCE.toUpdateUser(param, userRepository.getOne(userId));
         userRepository.saveAndFlush(user);
-        UserBO userBo = UserMapper.INSTANCE.toUserBO(user);
+        UserDTO userBo = UserMapper.INSTANCE.toUserBO(user);
         return Outcome.ofSuccess(userBo);
     }
 

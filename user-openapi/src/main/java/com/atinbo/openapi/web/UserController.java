@@ -4,15 +4,15 @@ package com.atinbo.openapi.web;
 import com.atinbo.core.exception.HttpAPIException;
 import com.atinbo.core.http.model.PageResult;
 import com.atinbo.core.http.status.HttpStatusCode;
-import com.atinbo.core.service.model.Outcome;
-import com.atinbo.core.service.model.PageOutcome;
+import com.atinbo.model.Outcome;
+import com.atinbo.model.PageOutcome;
 import com.atinbo.openapi.web.mapper.UserMapper;
 import com.atinbo.openapi.web.model.UserForm;
 import com.atinbo.openapi.web.model.UserQueryForm;
 import com.atinbo.openapi.web.model.UserRegisterForm;
 import com.atinbo.openapi.web.model.UserVO;
-import com.atinbo.user.model.UserBO;
-import com.atinbo.user.service.UserService;
+import com.atinbo.user.model.UserDTO;
+import com.atinbo.user.feign.IUserClient;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UserController {
     @Autowired
-    private UserService userService;
+    private IUserClient userService;
 
     /**
      * 注册用户
@@ -43,8 +43,7 @@ public class UserController {
     @ApiResponses(@ApiResponse(code = 500001, message = "系统错误"))
     @PostMapping("/register")
     public UserVO register(@RequestBody @Validated @ApiParam("用户注册基本信息") UserRegisterForm form) throws HttpAPIException {
-
-        Outcome<UserBO> outcome = userService.register(UserMapper.INSTANCE.toUserParam(form));
+        Outcome<UserDTO> outcome = userService.register(UserMapper.INSTANCE.toUserParam(form));
         if (outcome.isSuccess()) {
             return UserMapper.INSTANCE.toUserVO(outcome.getData());
         } else {
@@ -73,7 +72,7 @@ public class UserController {
     @GetMapping
     public PageResult<UserVO> findUserByPage(@Validated @ApiParam("用户查询参数") UserQueryForm form) throws HttpAPIException {
 
-        PageOutcome<UserBO> outcome = userService.findAllByPage(UserMapper.INSTANCE.toUserQueryParam(form));
+        PageOutcome<UserDTO> outcome = userService.findAllByPage(UserMapper.INSTANCE.toUserQueryParam(form));
         if (outcome.isSuccess()) {
             return PageResult.of(outcome.getPage(), UserMapper.INSTANCE.toUserVOs(outcome.getData()));
         } else {
@@ -92,7 +91,7 @@ public class UserController {
     @GetMapping("/{userId}")
     public UserVO findUsersById(@PathVariable(value = "userId") @ApiParam("userId") Long userId) throws HttpAPIException {
 
-        Outcome<UserBO> user = userService.findUsersById(userId);
+        Outcome<UserDTO> user = userService.findUsersById(userId);
         if (user.isSuccess()) {
             return UserMapper.INSTANCE.toUserVO(user.getData());
         } else {
@@ -112,7 +111,7 @@ public class UserController {
     @PutMapping("/{userId}")
     public UserVO editUser(@RequestBody @Validated @ApiParam("用户参数") UserForm form, @ApiParam("用户ID") @PathVariable("userId") Long userId) throws HttpAPIException {
 
-        Outcome<UserBO> outcome = userService.editUsersById(userId, UserMapper.INSTANCE.toUpdateUserParam(form));
+        Outcome<UserDTO> outcome = userService.editUsersById(userId, UserMapper.INSTANCE.toUpdateUserParam(form));
         if (outcome.isSuccess()) {
             return UserMapper.INSTANCE.toUserVO(outcome.getData());
         } else {

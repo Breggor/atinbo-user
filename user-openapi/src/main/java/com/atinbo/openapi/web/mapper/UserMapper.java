@@ -5,7 +5,7 @@ import com.atinbo.openapi.web.model.UserForm;
 import com.atinbo.openapi.web.model.UserQueryForm;
 import com.atinbo.openapi.web.model.UserRegisterForm;
 import com.atinbo.openapi.web.model.UserVO;
-import com.atinbo.user.model.UserBO;
+import com.atinbo.user.model.UserDTO;
 import com.atinbo.user.model.UserParam;
 import com.atinbo.user.model.UserQueryParam;
 import org.mapstruct.Mapper;
@@ -45,7 +45,7 @@ public interface UserMapper {
      * @param bo
      * @return
      */
-    UserVO toUserVO(UserBO bo);
+    UserVO toUserVO(UserDTO bo);
 
     /**
      * 将用户查询参数转换为用户参数
@@ -61,5 +61,5 @@ public interface UserMapper {
      * @param data
      * @return
      */
-    List<UserVO> toUserVOs(List<UserBO> data);
+    List<UserVO> toUserVOs(List<UserDTO> data);
 }

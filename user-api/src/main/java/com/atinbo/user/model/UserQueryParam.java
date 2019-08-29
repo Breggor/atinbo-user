@@ -1,10 +1,10 @@
 package com.atinbo.user.model;
 
 
-import com.atinbo.core.query.Operator;
-import com.atinbo.core.query.Query;
-import com.atinbo.core.query.QueryParam;
-import com.atinbo.core.service.model.PageParam;
+import com.atinbo.model.Operator;
+import com.atinbo.model.PageParam;
+import com.atinbo.model.Query;
+import com.atinbo.model.QueryParam;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
